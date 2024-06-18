@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TestDb.Models
 {
@@ -87,7 +86,6 @@ namespace TestDb.Models
     public class Document
     {
         public Guid DocumentId { get; set; }
-
         [Required]
         [StringLength(15, ErrorMessage = "File name is required (up to 15 characters)")]
         public string DocumentName { get; set; }
@@ -97,7 +95,7 @@ namespace TestDb.Models
         [Required]
         public string FileName { get; set; }
         [Required]
-        public byte[] DocumetByte { get; set; }
+        public byte[] DocumentByte { get; set; }
         [Required]
         public Guid OwnerGuid { get; set; }
         [Required]
@@ -105,16 +103,13 @@ namespace TestDb.Models
 
         public string GetJsonRepresentation()
         {
-            string jsonRepresentation = string.Empty;
             JsonSerializerSettings settings = new JsonSerializerSettings
             {
                 ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
             };
 
-            jsonRepresentation = JsonConvert.SerializeObject(this, settings);
-            return jsonRepresentation;
+            return JsonConvert.SerializeObject(this, settings);
         }
-
         public static Document FromJson(string json)
         {
             return JsonConvert.DeserializeObject<Document>(json);
