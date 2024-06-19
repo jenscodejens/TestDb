@@ -14,16 +14,18 @@ namespace TestDb.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Document>()
-            //   .HasOne(d => d.OwnerEntity)
-            //   .WithMany() // Assuming OwnerEntity doesn't have a back-reference to Document
-            //   .HasForeignKey(d => d.OwnerGuid); // Use the OwnerGuid property as the foreign key
-
-            //base.OnModelCreating(modelBuilder);
         }
     }
 }
 
+//modelBuilder.Entity<Document>()
+//.Property(d => d.OwnerEntity)
+//.HasConversion<string>();
 
+//modelBuilder.Entity<Document>()
+//  .Property(e => e.OwnerEntity)
+//  .HasConversion(
+//       v => v.ToString(),
+//       v => (FileOwnerEntity)Enum.Parse(typeof(FileOwnerEntity), v));
 
 
