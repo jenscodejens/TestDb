@@ -26,6 +26,24 @@ namespace TestDb.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Documents",
+                columns: table => new
+                {
+                    DocumentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DocumentName = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    DocumentDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DocumentTimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DocumentByte = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    OwnerGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FileOwnerEntity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Documents", x => x.DocumentId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Teachers",
                 columns: table => new
                 {
@@ -105,20 +123,6 @@ namespace TestDb.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Documents",
-                columns: table => new
-                {
-                    DocumentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DocumentName = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    DocumentDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DocumentTimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DocumentByte = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    OwnerGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OwnerEntity = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Activities_ModuleId",
                 table: "Activities",
@@ -139,10 +143,10 @@ namespace TestDb.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Documents");
+                name: "Activities");
 
             migrationBuilder.DropTable(
-                name: "Activities");
+                name: "Documents");
 
             migrationBuilder.DropTable(
                 name: "Students");

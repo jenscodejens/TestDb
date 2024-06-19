@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.Reflection.Emit;
 using TestDb.Models;
 
 namespace TestDb.Data
@@ -14,13 +16,20 @@ namespace TestDb.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
         }
     }
 }
 
-//modelBuilder.Entity<Document>()
-//.Property(d => d.OwnerEntity)
-//.HasConversion<string>();
+//modelBuilder
+//    .Entity<Document>()
+//    .Property(d => d.OwnerEntity)
+//    .HasConversion(new EnumToStringConverter<FileOwnerEntity>());
+
+//modelBuilder
+//    .Entity<Document>()
+//    .Property(d => d.OwnerEntity)
+//    .HasConversion<string>();
 
 //modelBuilder.Entity<Document>()
 //  .Property(e => e.OwnerEntity)

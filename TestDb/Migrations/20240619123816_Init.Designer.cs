@@ -12,7 +12,7 @@ using TestDb.Data;
 namespace TestDb.Migrations
 {
     [DbContext(typeof(TestDbContext))]
-    [Migration("20240619021812_Init")]
+    [Migration("20240619123816_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -108,9 +108,8 @@ namespace TestDb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OwnerEntity")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("FileOwnerEntity")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("OwnerGuid")
                         .HasColumnType("uniqueidentifier");
@@ -216,29 +215,6 @@ namespace TestDb.Migrations
                     b.Navigation("Module");
                 });
 
-            modelBuilder.Entity("TestDb.Models.Document", b =>
-                {
-                    b.HasOne("TestDb.Models.Activity", null)
-                        .WithMany("OwnedDocuments")
-                        .HasForeignKey("ActivityId");
-
-                    b.HasOne("TestDb.Models.Course", null)
-                        .WithMany("OwnedDocuments")
-                        .HasForeignKey("CourseId");
-
-                    b.HasOne("TestDb.Models.Module", null)
-                        .WithMany("OwnedDocuments")
-                        .HasForeignKey("ModuleId");
-
-                    b.HasOne("TestDb.Models.Student", null)
-                        .WithMany("OwnedDocuments")
-                        .HasForeignKey("StudentId");
-
-                    b.HasOne("TestDb.Models.Teacher", null)
-                        .WithMany("OwnedDocuments")
-                        .HasForeignKey("TeacherId");
-                });
-
             modelBuilder.Entity("TestDb.Models.Module", b =>
                 {
                     b.HasOne("TestDb.Models.Course", "Course")
@@ -261,16 +237,9 @@ namespace TestDb.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("TestDb.Models.Activity", b =>
-                {
-                    b.Navigation("OwnedDocuments");
-                });
-
             modelBuilder.Entity("TestDb.Models.Course", b =>
                 {
                     b.Navigation("Modules");
-
-                    b.Navigation("OwnedDocuments");
 
                     b.Navigation("Students");
                 });
@@ -278,18 +247,6 @@ namespace TestDb.Migrations
             modelBuilder.Entity("TestDb.Models.Module", b =>
                 {
                     b.Navigation("Activities");
-
-                    b.Navigation("OwnedDocuments");
-                });
-
-            modelBuilder.Entity("TestDb.Models.Student", b =>
-                {
-                    b.Navigation("OwnedDocuments");
-                });
-
-            modelBuilder.Entity("TestDb.Models.Teacher", b =>
-                {
-                    b.Navigation("OwnedDocuments");
                 });
 #pragma warning restore 612, 618
         }

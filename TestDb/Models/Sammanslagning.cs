@@ -1,5 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection;
+using TestDb.Models;
 
 namespace TestDb.Models
 {
@@ -17,6 +20,7 @@ namespace TestDb.Models
         public string StudentEmail { get; set; }
         public Guid CourseId { get; set; }
         public Course Course { get; set; }
+        [NotMapped]
         public ICollection<Document> OwnedDocuments { get; set; }
     }
 
@@ -32,21 +36,23 @@ namespace TestDb.Models
         [Required]
         [EmailAddress]
         public string TeacherEmail { get; set; }
+        [NotMapped]
         public ICollection<Document> OwnedDocuments { get; set; }
     }
     public class Course
     {
         public Guid CourseId { get; set; }
         [Required]
-        [StringLength(15, ErrorMessage = "Module name is required (up to 15 characters)")]
+        [StringLength(15, ErrorMessage = "Course name is required (up to 15 characters)")]
         public string CourseName { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(50, ErrorMessage = "Course description is required (up to 50 characters)")]
         public string CourseDescription { get; set; }
         [Required]
         public DateTime CourseStartDate { get; set; }
         public ICollection<Module> Modules { get; set; }
         public ICollection<Student> Students { get; set; }
+        [NotMapped]
         public ICollection<Document> OwnedDocuments { get; set; }
     }
 
@@ -61,6 +67,7 @@ namespace TestDb.Models
         public DateTime ModuleStartDate { get; set; }
         public DateTime? ModuleEndDate { get; set; }
         public ICollection<Activity> Activities { get; set; }
+        [NotMapped]
         public ICollection<Document> OwnedDocuments { get; set; }
         public Guid CourseId { get; set; }
         public Course Course { get; set; }
@@ -78,6 +85,7 @@ namespace TestDb.Models
         [Required]
         public DateTime ActivityStartDate { get; set; }
         public DateTime? ActivityEndDate { get; set; }
+        [NotMapped]
         public ICollection<Document> OwnedDocuments { get; set; }
         public Guid ModuleId { get; set; }
         public Module Module { get; set; }
@@ -87,7 +95,7 @@ namespace TestDb.Models
     {
         public Guid DocumentId { get; set; }
         [Required]
-        [StringLength(15, ErrorMessage = "File name is required (up to 15 characters)")]
+        [StringLength(15, ErrorMessage = "Document name is required (up to 15 characters)")]
         public string DocumentName { get; set; }
         public string? DocumentDescription { get; set; }
         [Required]
@@ -98,26 +106,11 @@ namespace TestDb.Models
         public byte[] DocumentByte { get; set; }
         [Required]
         public Guid OwnerGuid { get; set; }
+
         [Required]
-        public FileOwnerEntity OwnerEntity { get; set; }
+        public FileOwnerEntity FileOwnerEntity { get; set; }
 
-        //public string GetJsonRepresentation()
-        //{
-        //    JsonSerializerSettings settings = new JsonSerializerSettings
-        //    {
-        //        ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
-        //    };
-
-        //    return JsonConvert.SerializeObject(this, settings);
-        //}
-        //public static Document FromJson(string json)
-        //{
-        //    return JsonConvert.DeserializeObject<Document>(json);
-        //}
     }
 }
 
 
-
-// guid, content, ownertype, guid ägare - guid/content/<entities>(guid)
-// skapa ind. guid vid varje ny entitet
