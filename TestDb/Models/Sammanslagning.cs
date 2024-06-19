@@ -24,10 +24,10 @@ namespace TestDb.Models
     {
         public Guid TeacherId { get; set; }
         [Required]
-        [StringLength(15)]
+        [StringLength(15, ErrorMessage = "First name is required (up to 15 characters)")]
         public string TeacherFirstName { get; set; }
         [Required]
-        [StringLength(15)]
+        [StringLength(15, ErrorMessage = "Last name is required (up to 15 characters)")]
         public string TeacherLastName { get; set; }
         [Required]
         [EmailAddress]
@@ -38,7 +38,7 @@ namespace TestDb.Models
     {
         public Guid CourseId { get; set; }
         [Required]
-        [StringLength(15)]
+        [StringLength(15, ErrorMessage = "Module name is required (up to 15 characters)")]
         public string CourseName { get; set; }
         [Required]
         [StringLength(50)]
@@ -54,7 +54,7 @@ namespace TestDb.Models
     {
         public Guid ModuleId { get; set; }
         [Required]
-        [StringLength(15)]
+        [StringLength(15, ErrorMessage = "Module name is required (up to 15 characters)")]
         public string ModuleName { get; set; }
         public string? ModuleDescription { get; set; }
         [Required]
@@ -72,7 +72,7 @@ namespace TestDb.Models
         [Required]
         public string ActivityType { get; set; }
         [Required]
-        [StringLength(15)]
+        [StringLength(15, ErrorMessage = "Activity name is required (up to 15 characters)")]
         public string ActivityName { get; set; }
         public string? ActivityDescription { get; set; }
         [Required]
@@ -101,19 +101,19 @@ namespace TestDb.Models
         [Required]
         public FileOwnerEntity OwnerEntity { get; set; }
 
-        public string GetJsonRepresentation()
-        {
-            JsonSerializerSettings settings = new JsonSerializerSettings
-            {
-                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
-            };
+        //public string GetJsonRepresentation()
+        //{
+        //    JsonSerializerSettings settings = new JsonSerializerSettings
+        //    {
+        //        ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
+        //    };
 
-            return JsonConvert.SerializeObject(this, settings);
-        }
-        public static Document FromJson(string json)
-        {
-            return JsonConvert.DeserializeObject<Document>(json);
-        }
+        //    return JsonConvert.SerializeObject(this, settings);
+        //}
+        //public static Document FromJson(string json)
+        //{
+        //    return JsonConvert.DeserializeObject<Document>(json);
+        //}
     }
 }
 
